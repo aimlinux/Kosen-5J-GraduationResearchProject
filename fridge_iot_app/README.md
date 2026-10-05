@@ -7,18 +7,16 @@
 > 注意：表示する「正常・注意・警告」は研究用の仮ルールです。食品の腐敗や安全性を判定・保証するものではありません。実際の冷蔵庫の電源配線や電流センサーの接続は感電・火災の危険があるため、このサンプルを見ながら自己判断で作業せず、必ず指導教員・有資格者の管理下で安全な計測方法を確認してください。
 
 ## 起動方法（Windows / Ubuntu）
-Python 3.10以降を用意し、このフォルダで実行します。
+Python 3.10以降を用意し、`fridge_iot_app` フォルダーで実行します（プロジェクトルートからの場合は、最初に `cd fridge_iot_app`）。
 
-```bash
+```powershell
 python -m venv .venv
-# Windows:
 .venv\Scripts\activate
-# Ubuntu:
-source .venv/bin/activate
-
 python -m pip install -r requirements.txt
 uvicorn app:app --host 127.0.0.1 --port 8000
 ```
+
+Ubuntuでは仮想環境の有効化に `source .venv/bin/activate` を使います。以降のインストール・起動コマンドは同じです。
 
 ブラウザで http://127.0.0.1:8000 を開き、「デモ計測を追加」を押すと値とグラフが更新されます。
 同じネットワーク上の別端末からのアクセスが必要な場合は、ネットワーク構成・ファイアウォール・認証を指導者と確認してから公開範囲を設定してください。
@@ -53,6 +51,8 @@ uvicorn app:app --host 127.0.0.1 --port 8000
 
 ## ファイル
 - `app.py`: FastAPI APIとSQLite保存、試作判定
-- `static/index.html`: ダッシュボード
-- `static/style.css`: UI
-- `static/app.js`: 定期更新とグラフ描画
+- `requirements.txt`: Python依存ライブラリ
+- `static/index.html`: ダッシュボード。サーバーの `/` で表示
+- `static/style.css`: UI。`/static/style.css` として配信
+- `static/app.js`: 定期更新とグラフ描画。`/static/app.js` として配信
+- `fridge_data.sqlite3`: 計測データベース。初回起動時に `app.py` と同じフォルダーへ生成
